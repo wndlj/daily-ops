@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
     :root {
       --bg:          #0c0c14;
       --surface:     #131320;
@@ -29,9 +29,9 @@
       --red:         #e04858;
       --r:           14px;
     }
-
+ 
     html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; overflow: hidden; }
-
+ 
     #app {
       height: 100dvh;
       display: flex;
@@ -39,30 +39,30 @@
       max-width: 480px;
       margin: 0 auto;
     }
-
+ 
     /* ── SCREENS ───────────────────────────────────── */
     .screen { display: none; flex-direction: column; height: 100%; overflow: hidden; }
     .screen.active { display: flex; }
-
+ 
     /* ── LOADING ───────────────────────────────────── */
     #screen-loading { align-items: center; justify-content: center; }
     .loader { width: 36px; height: 36px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
+ 
     /* ── LOGIN ─────────────────────────────────────── */
     #screen-login { justify-content: center; gap: 0; padding: 40px 28px; overflow-y: auto; }
-
+ 
     .logo-box { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 36px; }
     .logo-icon { width: 80px; height: 80px; background: var(--surface2); border: 1px solid var(--border); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 40px; box-shadow: 0 0 40px var(--accent-glow); }
     .app-name { font-size: 34px; font-weight: 800; letter-spacing: -1px; }
     .app-name span { color: var(--accent); }
     .app-sub { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 2.5px; text-transform: uppercase; }
-
+ 
     .login-form { display: flex; flex-direction: column; gap: 10px; width: 100%; }
     .login-tabs { display: flex; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 4px; margin-bottom: 6px; }
     .login-tab { flex: 1; padding: 9px; border: none; background: transparent; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-dim); cursor: pointer; transition: all .15s; }
     .login-tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.4); }
-
+ 
     .auth-input {
       width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r);
       padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text);
@@ -70,11 +70,11 @@
     }
     .auth-input:focus { border-color: var(--accent); }
     .auth-input::placeholder { color: var(--text-dim); }
-
+ 
     .auth-error { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--red); background: rgba(224,72,88,.08); border: 1px solid rgba(224,72,88,.2); border-radius: 9px; padding: 10px 13px; display: none; }
     .auth-error.show { display: block; }
     .auth-hint { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.5; margin-top: 4px; }
-
+ 
     /* ── BUTTONS ───────────────────────────────────── */
     .btn {
       display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -89,7 +89,7 @@
     .btn-ghost    { background: transparent; color: var(--text-dim); border: 1px solid var(--border); }
     .btn-danger   { background: transparent; color: var(--red); border: 1px solid var(--red); }
     .btn-sm       { padding: 9px 16px; font-size: 13px; width: auto; }
-
+ 
     /* ── HEADER ────────────────────────────────────── */
     .header {
       display: flex; align-items: center; justify-content: space-between;
@@ -106,11 +106,11 @@
       font-size: 18px; -webkit-tap-highlight-color: transparent; transition: all .15s;
     }
     .icon-btn:active { transform: scale(0.92); }
-
+ 
     /* ── MAIN APP ──────────────────────────────────── */
     #screen-main { overflow: hidden; }
     .main-body { flex: 1; overflow-y: auto; padding: 16px 20px 0; display: flex; flex-direction: column; }
-
+ 
     /* progress */
     .progress-wrap { margin-bottom: 16px; flex-shrink: 0; }
     .progress-meta { display: flex; justify-content: space-between; margin-bottom: 6px; }
@@ -118,13 +118,13 @@
     .progress-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); }
     .progress-track { background: var(--surface2); border-radius: 100px; height: 5px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--accent); border-radius: 100px; transition: width .4s ease; }
-
+ 
     /* task list */
     .task-list { flex: 1; overflow-y: auto; padding-bottom: 8px; }
     .tasks-empty { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 60px 0; color: var(--text-dim); text-align: center; }
     .tasks-empty-icon { font-size: 44px; opacity: .45; }
     .tasks-empty-text { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 1px; }
-
+ 
     /* task card */
     .task-card {
       display: flex; align-items: flex-start; gap: 12px;
@@ -135,7 +135,7 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .task-card.done { opacity: .45; border-color: transparent; }
     .task-card.done .task-text { text-decoration: line-through; color: var(--text-dim); }
-
+ 
     .task-check {
       width: 26px; height: 26px; border: 2px solid var(--border); border-radius: 7px;
       cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
@@ -143,21 +143,21 @@
     }
     .task-check:hover { border-color: var(--accent); }
     .task-card.done .task-check { background: var(--green); border-color: var(--green); }
-
+ 
     .task-body { flex: 1; min-width: 0; cursor: pointer; }
     .task-text { font-size: 15px; line-height: 1.4; word-break: break-word; }
     .task-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
     .badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 5px; }
     .badge-time { color: var(--accent); background: var(--accent-glow); }
     .badge-rolled { color: var(--text-dim); background: var(--surface2); }
-
+ 
     .task-del {
       width: 30px; height: 30px; background: transparent; border: none; cursor: pointer;
       color: var(--text-dim); font-size: 18px; display: flex; align-items: center; justify-content: center;
       border-radius: 7px; transition: all .15s; flex-shrink: 0;
     }
     .task-del:hover { color: var(--red); background: rgba(224,72,88,.1); }
-
+ 
     /* add row */
     .add-row { display: flex; flex-direction: column; gap: 8px; padding: 12px 20px max(env(safe-area-inset-bottom), 16px); border-top: 1px solid var(--border); flex-shrink: 0; }
     .add-row-main { display: flex; gap: 8px; }
@@ -179,7 +179,7 @@
       color: #0c0c14; font-size: 26px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0;
     }
     .add-btn:active { transform: scale(0.93); }
-
+ 
     /* edit modal */
     .edit-input {
       width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r);
@@ -194,7 +194,7 @@
     }
     .edit-time:focus { border-color: var(--accent); }
     .edit-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-
+ 
     /* ── MODALS ────────────────────────────────────── */
     .overlay {
       display: none; position: fixed; inset: 0;
@@ -214,10 +214,10 @@
     .modal-title span { color: var(--accent); }
     .modal-sub { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
     .modal-gap { height: 10px; }
-
+ 
     /* section label */
     .sec-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
-
+ 
     /* morning task rows */
     .m-row { display: flex; gap: 8px; margin-bottom: 8px; }
     .m-text {
@@ -236,7 +236,7 @@
       color: var(--text-dim); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s;
     }
     .m-del:hover { color: var(--red); border-color: var(--red); }
-
+ 
     .add-m-btn {
       display: flex; align-items: center; gap: 8px; width: 100%;
       background: transparent; border: 1px dashed var(--border); border-radius: var(--r);
@@ -244,7 +244,7 @@
       cursor: pointer; margin-bottom: 16px; transition: all .15s;
     }
     .add-m-btn:hover { border-color: var(--accent); color: var(--accent); }
-
+ 
     /* rollover cards */
     .ro-card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 13px; margin-bottom: 10px; }
     .ro-text { font-size: 14px; line-height: 1.4; margin-bottom: 10px; }
@@ -256,7 +256,7 @@
     .ro-time:focus { border-color: var(--accent); }
     .ro-btn-active { background: var(--accent) !important; color: #0c0c14 !important; border-color: var(--accent) !important; }
     .ro-btn-dismiss-active { background: rgba(224,72,88,.15) !important; color: var(--red) !important; border-color: var(--red) !important; }
-
+ 
     /* settings */
     .settings-section { margin-bottom: 22px; }
     .s-row {
@@ -271,7 +271,7 @@
     .u-name { font-size: 14px; }
     .notif-note { font-size: 12px; color: var(--text-dim); line-height: 1.6; padding: 0 2px; margin-top: -4px; margin-bottom: 12px; }
     .divider { height: 1px; background: var(--border); margin: 16px 0; }
-
+ 
     /* toast */
     .toast {
       position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(16px);
@@ -284,12 +284,12 @@
 </head>
 <body>
 <div id="app">
-
+ 
   <!-- LOADING -->
   <div id="screen-loading" class="screen active">
     <div class="loader"></div>
   </div>
-
+ 
   <!-- LOGIN -->
   <div id="screen-login" class="screen">
     <div class="logo-box">
@@ -297,27 +297,27 @@
       <div class="app-name">DAILY <span>OPS</span></div>
       <div class="app-sub">Mission-ready task management</div>
     </div>
-
+ 
     <div class="login-form">
       <div class="login-tabs">
         <button class="login-tab active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
         <button class="login-tab" id="tab-create" onclick="switchTab('create')">Create Account</button>
       </div>
-
+ 
       <input type="email" class="auth-input" id="auth-email" placeholder="your@email.com" autocomplete="email">
       <input type="password" class="auth-input" id="auth-pass" placeholder="Password" autocomplete="current-password">
       <input type="password" class="auth-input" id="auth-pass2" placeholder="Confirm password" autocomplete="new-password" style="display:none">
-
+ 
       <div class="auth-error" id="auth-error"></div>
-
+ 
       <button class="btn btn-primary" id="btn-auth-submit">Sign In →</button>
-
+ 
       <p class="auth-hint" id="auth-hint">
         Use the same email and password on all your devices to sync tasks.
       </p>
     </div>
   </div>
-
+ 
   <!-- MAIN APP -->
   <div id="screen-main" class="screen">
     <div class="header">
@@ -327,7 +327,7 @@
       </div>
       <button class="icon-btn" id="btn-settings" title="Settings">⚙️</button>
     </div>
-
+ 
     <div class="main-body">
       <div class="progress-wrap" id="progress-wrap" style="display:none">
         <div class="progress-meta">
@@ -338,7 +338,7 @@
           <div class="progress-fill" id="prog-fill" style="width:0%"></div>
         </div>
       </div>
-
+ 
       <div class="task-list" id="task-list">
         <div class="tasks-empty">
           <div class="tasks-empty-icon">📋</div>
@@ -346,7 +346,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="add-row">
       <div class="add-row-main">
         <input type="text" class="task-input" id="new-task" placeholder="Add a task..." maxlength="200">
@@ -358,9 +358,9 @@
       </div>
     </div>
   </div>
-
+ 
 </div>
-
+ 
 <!-- MORNING MODAL -->
 <div class="overlay" id="ov-morning">
   <div class="modal">
@@ -375,7 +375,7 @@
     <button class="btn btn-ghost" id="btn-morning-skip">Skip for now</button>
   </div>
 </div>
-
+ 
 <!-- ROLLOVER MODAL -->
 <div class="overlay" id="ov-rollover">
   <div class="modal">
@@ -386,13 +386,13 @@
     <button class="btn btn-primary" id="btn-ro-done">Confirm →</button>
   </div>
 </div>
-
+ 
 <!-- SETTINGS MODAL -->
 <div class="overlay" id="ov-settings">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">Settings</div>
-
+ 
     <div class="settings-section">
       <div class="sec-label">Account</div>
       <div class="s-row">
@@ -402,7 +402,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="settings-section">
       <div class="sec-label">Morning Reminder</div>
       <div class="s-row">
@@ -413,17 +413,18 @@
         Keep the app installed on your home screen. You'll be prompted when you open the app each morning, and a browser notification will appear if the app is running in the background.
       </p>
     </div>
-
+ 
     <div class="settings-section">
       <div class="sec-label">Actions</div>
       <button class="btn btn-ghost" id="btn-reopen-morning" style="margin-bottom:8px">Re-open Morning Prompt</button>
+      <button class="btn btn-ghost" id="btn-refresh-app" style="margin-bottom:8px">🔄 Check for App Updates</button>
     </div>
-
+ 
     <div class="divider"></div>
     <button class="btn btn-danger" id="btn-signout">Sign Out</button>
   </div>
 </div>
-
+ 
 <!-- EDIT TASK MODAL -->
 <div class="overlay" id="ov-edit">
   <div class="modal">
@@ -439,10 +440,10 @@
     <button class="btn btn-danger" id="btn-edit-delete">Delete Task</button>
   </div>
 </div>
-
+ 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
+ 
 <script type="module">
   import { initializeApp }        from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
   import { getFirestore, doc, setDoc, getDoc, getDocs,
@@ -452,7 +453,7 @@
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
            onAuthStateChanged, signOut, sendPasswordResetEmail }
     from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-
+ 
   // ── CONFIG ──────────────────────────────────────────────────────
   const firebaseConfig = {
     apiKey:            "AIzaSyDo4T_sJVtpS7z5iFLkuAh9T_EQBeK3ufY",
@@ -462,33 +463,33 @@
     messagingSenderId: "752364756016",
     appId:             "1:752364756016:web:06f00e63f03c379afea1f5"
   };
-
+ 
   const fbApp = initializeApp(firebaseConfig);
   const db    = getFirestore(fbApp);
   const auth  = getAuth(fbApp);
-
+ 
   // ── HELPERS ─────────────────────────────────────────────────────
   const $ = id => document.getElementById(id);
-
+ 
   function todayStr() {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   }
-
+ 
   function yesterdayStr() {
     const d = new Date(); d.setDate(d.getDate()-1);
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   }
-
+ 
   function formatDate(str) {
     const [y,m,d] = str.split('-');
     return new Date(+y, +m-1, +d).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
   }
-
+ 
   function esc(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
-
+ 
   let toastT;
   function toast(msg) {
     const el = $('toast');
@@ -496,24 +497,24 @@
     clearTimeout(toastT);
     toastT = setTimeout(() => el.classList.remove('show'), 2600);
   }
-
+ 
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(id).classList.add('active');
   }
-
+ 
   function openOverlay(id)  { $(id).classList.add('open'); }
   function closeOverlay(id) { $(id).classList.remove('open'); }
-
+ 
   document.querySelectorAll('.overlay').forEach(ov => {
     ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); });
   });
-
+ 
   // ── FIRESTORE REFS ──────────────────────────────────────────────
   let uid = null;
   const tasksCol  = () => collection(db, 'users', uid, 'tasks');
   const metaDocR  = () => doc(db, 'users', uid, 'meta', 'app');
-
+ 
   async function getMeta() {
     const s = await getDoc(metaDocR());
     return s.exists() ? s.data() : {};
@@ -521,10 +522,10 @@
   async function setMeta(data) {
     await setDoc(metaDocR(), data, { merge: true });
   }
-
+ 
   // ── AUTH ────────────────────────────────────────────────────────
   let authMode = 'signin';
-
+ 
   window.switchTab = (mode) => {
     authMode = mode;
     $('tab-signin').classList.toggle('active', mode === 'signin');
@@ -537,15 +538,15 @@
     $('auth-pass').setAttribute('autocomplete', mode === 'create' ? 'new-password' : 'current-password');
     hideAuthError();
   };
-
+ 
   function showAuthError(msg) {
     const el = $('auth-error');
     el.textContent = msg;
     el.classList.add('show');
   }
-
+ 
   function hideAuthError() { $('auth-error').classList.remove('show'); }
-
+ 
   function friendlyAuthError(code) {
     const map = {
       'auth/invalid-email':            'That doesn\'t look like a valid email address.',
@@ -559,15 +560,15 @@
     };
     return map[code] || 'Something went wrong. Please try again.';
   }
-
+ 
   $('btn-auth-submit').onclick = async () => {
     hideAuthError();
     const email = $('auth-email').value.trim();
     const pass  = $('auth-pass').value;
     const pass2 = $('auth-pass2').value;
-
+ 
     if (!email || !pass) { showAuthError('Please enter your email and password.'); return; }
-
+ 
     if (authMode === 'create') {
       if (pass !== pass2) { showAuthError('Passwords don\'t match.'); return; }
       if (pass.length < 6) { showAuthError('Password must be at least 6 characters.'); return; }
@@ -580,12 +581,12 @@
       } catch(e) { showAuthError(friendlyAuthError(e.code)); }
     }
   };
-
+ 
   // Allow Enter key to submit
   [$('auth-email'), $('auth-pass'), $('auth-pass2')].forEach(el => {
     el.addEventListener('keydown', e => { if (e.key === 'Enter') $('btn-auth-submit').click(); });
   });
-
+ 
   onAuthStateChanged(auth, async user => {
     if (user) {
       uid = user.uid;
@@ -602,37 +603,37 @@
       showScreen('screen-login');
     }
   });
-
+ 
   $('btn-signout').onclick = async () => {
     closeOverlay('ov-settings');
     await signOut(auth);
   };
-
+ 
   // ── MORNING ROUTINE ─────────────────────────────────────────────
   async function runMorningRoutine() {
     const yesterday = yesterdayStr();
     const today     = todayStr();
-
+ 
     // First: check for yesterday's incomplete tasks
     const q = query(tasksCol(), where('date','==',yesterday), where('done','==',false));
     const snap = await getDocs(q);
     const unfinished = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-
+ 
     if (unfinished.length > 0) {
       showRolloverModal(unfinished);
       return; // rollover "Confirm" will trigger morning prompt
     }
-
+ 
     // Then: show morning prompt if not done today
     const meta = await getMeta();
     if (meta.morningPromptDone !== today) {
       showMorningModal();
     }
   }
-
+ 
   // ── TASKS ────────────────────────────────────────────────────────
   let unsubscribe = null;
-
+ 
   function subscribeToTasks() {
     const today = todayStr();
     const q = query(tasksCol(), where('date','==',today));
@@ -643,7 +644,7 @@
       renderTasks(tasks);
     });
   }
-
+ 
   async function addTask(text, dueTime, date, rolledFrom) {
     await setDoc(doc(tasksCol()), {
       text: text.trim(),
@@ -654,17 +655,17 @@
       createdAt: serverTimestamp()
     });
   }
-
+ 
   function renderTasks(tasks) {
     const list = $('task-list');
     const pw   = $('progress-wrap');
-
+ 
     if (!tasks.length) {
       list.innerHTML = `<div class="tasks-empty"><div class="tasks-empty-icon">✅</div><div class="tasks-empty-text">All clear. Add a task below.</div></div>`;
       pw.style.display = 'none';
       return;
     }
-
+ 
     pw.style.display = 'block';
     const done  = tasks.filter(t => t.done).length;
     const total = tasks.length;
@@ -672,7 +673,7 @@
     $('prog-label').textContent = `${done} / ${total} tasks done`;
     $('prog-pct').textContent   = `${pct}%`;
     $('prog-fill').style.width  = `${pct}%`;
-
+ 
     const sorted = [...tasks.filter(t => !t.done), ...tasks.filter(t => t.done)];
     list.innerHTML = sorted.map(t => `
       <div class="task-card ${t.done ? 'done' : ''}" data-id="${t.id}">
@@ -689,7 +690,7 @@
         <button class="task-del" data-del="${t.id}" title="Delete">×</button>
       </div>`).join('');
   }
-
+ 
   $('task-list').addEventListener('click', async e => {
     const check = e.target.closest('.task-check');
     const del   = e.target.closest('[data-del]');
@@ -710,10 +711,10 @@
       if (card) openEditModal(card.dataset.id);
     }
   });
-
+ 
   // ── EDIT MODAL ───────────────────────────────────────────────
   let editingId = null;
-
+ 
   async function openEditModal(id) {
     editingId = id;
     const snap = await getDoc(doc(db, 'users', uid, 'tasks', id));
@@ -724,7 +725,7 @@
     openOverlay('ov-edit');
     setTimeout(() => $('edit-text').focus(), 300);
   }
-
+ 
   $('btn-edit-save').onclick = async () => {
     if (!editingId) return;
     const text = $('edit-text').value.trim();
@@ -737,7 +738,7 @@
     toast('Task updated!');
     editingId = null;
   };
-
+ 
   $('btn-edit-delete').onclick = async () => {
     if (!editingId) return;
     if (confirm('Delete this task?')) {
@@ -746,9 +747,9 @@
       editingId = null;
     }
   };
-
+ 
   $('edit-text').addEventListener('keydown', e => { if (e.key === 'Enter') $('btn-edit-save').click(); });
-
+ 
   // add task
   async function addFromInput() {
     const inp  = $('new-task');
@@ -762,17 +763,17 @@
   }
   $('btn-add').onclick = addFromInput;
   $('new-task').onkeydown = e => { if (e.key === 'Enter') addFromInput(); };
-
+ 
   // ── MORNING MODAL ────────────────────────────────────────────────
   let mTasks = [{ text:'', time:'' }];
-
+ 
   function showMorningModal() {
     mTasks = [{ text:'', time:'' }];
     $('morning-sub').textContent = `What's on your plate for ${formatDate(todayStr())}?`;
     renderMorningList();
     openOverlay('ov-morning');
   }
-
+ 
   function renderMorningList() {
     $('morning-list').innerHTML = mTasks.map((t,i) => `
       <div class="m-row">
@@ -782,19 +783,19 @@
         ${mTasks.length > 1 ? `<button class="m-del" data-mdi="${i}">×</button>` : ''}
       </div>`).join('');
   }
-
+ 
   $('morning-list').addEventListener('input', e => {
     const el = e.target;
     if (el.dataset.mi !== undefined) mTasks[+el.dataset.mi][el.dataset.mf] = el.value;
   });
-
+ 
   $('morning-list').addEventListener('click', e => {
     const btn = e.target.closest('[data-mdi]');
     if (btn) { mTasks.splice(+btn.dataset.mdi, 1); renderMorningList(); }
   });
-
+ 
   $('btn-add-m').onclick = () => { mTasks.push({text:'',time:''}); renderMorningList(); };
-
+ 
   $('btn-morning-go').onclick = async () => {
     const valid = mTasks.filter(t => t.text.trim());
     for (const t of valid) await addTask(t.text, t.time||null, todayStr(), null);
@@ -802,21 +803,21 @@
     closeOverlay('ov-morning');
     if (valid.length) toast(`${valid.length} task${valid.length > 1 ? 's' : ''} added!`);
   };
-
+ 
   $('btn-morning-skip').onclick = async () => {
     await setMeta({ morningPromptDone: todayStr() });
     closeOverlay('ov-morning');
   };
-
+ 
   // ── ROLLOVER MODAL ───────────────────────────────────────────────
   let roTasks = [];
-
+ 
   function showRolloverModal(tasks) {
     roTasks = tasks.map(t => ({ ...t, action:'rollover', newTime: t.dueTime||'' }));
     renderRolloverList();
     openOverlay('ov-rollover');
   }
-
+ 
   function renderRolloverList() {
     $('rollover-list').innerHTML = roTasks.map((t,i) => `
       <div class="ro-card">
@@ -831,16 +832,16 @@
         </div>
       </div>`).join('');
   }
-
+ 
   $('rollover-list').addEventListener('input', e => {
     if (e.target.dataset.roi !== undefined) roTasks[+e.target.dataset.roi].newTime = e.target.value;
   });
-
+ 
   $('rollover-list').addEventListener('click', e => {
     const btn = e.target.closest('[data-ro]');
     if (btn) { roTasks[+btn.dataset.ro].action = btn.dataset.ra; renderRolloverList(); }
   });
-
+ 
   $('btn-ro-done').onclick = async () => {
     for (const t of roTasks) {
       if (t.action === 'rollover') {
@@ -854,25 +855,42 @@
     const meta = await getMeta();
     if (meta.morningPromptDone !== todayStr()) showMorningModal();
   };
-
+ 
   // ── SETTINGS MODAL ───────────────────────────────────────────────
   $('btn-settings').onclick = async () => {
     const meta = await getMeta();
     $('s-time').value = meta.reminderTime || '07:00';
     openOverlay('ov-settings');
   };
-
+ 
   $('s-time').onchange = async e => {
     await setMeta({ reminderTime: e.target.value });
     toast('Reminder time saved');
     scheduleNotif(e.target.value);
   };
-
+ 
   $('btn-reopen-morning').onclick = () => {
     closeOverlay('ov-settings');
     showMorningModal();
   };
-
+ 
+  $('btn-refresh-app').onclick = async () => {
+    $('btn-refresh-app').textContent = '⏳ Checking...';
+    try {
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        for (const reg of registrations) await reg.unregister();
+      }
+      // Clear caches
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k)));
+      toast('Updated! Reloading...');
+      setTimeout(() => window.location.reload(true), 1000);
+    } catch(e) {
+      window.location.reload(true);
+    }
+  };
+ 
   // ── NOTIFICATIONS ────────────────────────────────────────────────
   async function setupNotifications() {
     if (!('Notification' in window)) return;
@@ -880,7 +898,7 @@
     const meta = await getMeta();
     scheduleNotif(meta.reminderTime || '07:00');
   }
-
+ 
   let notifTimer;
   function scheduleNotif(timeStr) {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
@@ -894,7 +912,7 @@
       scheduleNotif(timeStr);
     }, next - now);
   }
-
+ 
   // ── SERVICE WORKER ───────────────────────────────────────────────
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(console.error);
