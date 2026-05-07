@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="42" fill="#0c0c14"/>
+  <!-- clipboard base -->
+  <rect x="44" y="52" width="104" height="112" rx="10" fill="#131320"/>
+  <rect x="44" y="52" width="104" height="112" rx="10" fill="none" stroke="#252540" stroke-width="1.5"/>
+  <!-- clip at top -->
+  <rect x="76" y="44" width="40" height="18" rx="5" fill="#1a1a2e" stroke="#252540" stroke-width="1.5"/>
+  <!-- task lines -->
+  <rect x="64" y="82" width="10" height="10" rx="3" fill="#e8a020"/>
+  <rect x="82" y="84" width="54" height="6" rx="3" fill="#e8e8f4"/>
+  <rect x="64" y="103" width="10" height="10" rx="3" fill="#38c878"/>
+  <rect x="82" y="105" width="44" height="6" rx="3" fill="#60609a"/>
+  <!-- checkmark in green box -->
+  <path d="M66.5 108 L69.5 111 L75.5 104.5" stroke="#0c0c14" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="64" y="124" width="10" height="10" rx="3" fill="#252540"/>
+  <rect x="82" y="126" width="50" height="6" rx="3" fill="#e8e8f4"/>
+</svg>
