@@ -144,7 +144,7 @@
     .task-check:hover { border-color: var(--accent); }
     .task-card.done .task-check { background: var(--green); border-color: var(--green); }
 
-    .task-body { flex: 1; min-width: 0; }
+    .task-body { flex: 1; min-width: 0; cursor: pointer; }
     .task-text { font-size: 15px; line-height: 1.4; word-break: break-word; }
     .task-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
     .badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 5px; }
@@ -159,7 +159,15 @@
     .task-del:hover { color: var(--red); background: rgba(224,72,88,.1); }
 
     /* add row */
-    .add-row { display: flex; gap: 8px; padding: 12px 20px max(env(safe-area-inset-bottom), 16px); border-top: 1px solid var(--border); flex-shrink: 0; }
+    .add-row { display: flex; flex-direction: column; gap: 8px; padding: 12px 20px max(env(safe-area-inset-bottom), 16px); border-top: 1px solid var(--border); flex-shrink: 0; }
+    .add-row-main { display: flex; gap: 8px; }
+    .add-row-extra { display: flex; gap: 8px; }
+    .add-time {
+      flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 10px 13px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); outline: none; transition: border-color .15s;
+    }
+    .add-time:focus { border-color: var(--accent); }
+    .add-time-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); display: flex; align-items: center; padding: 0 4px; white-space: nowrap; }
     .task-input {
       flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
       padding: 12px 14px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text); outline: none; transition: border-color .15s;
@@ -171,6 +179,21 @@
       color: #0c0c14; font-size: 26px; font-weight: 300; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; flex-shrink: 0;
     }
     .add-btn:active { transform: scale(0.93); }
+
+    /* edit modal */
+    .edit-input {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 13px 14px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text);
+      outline: none; transition: border-color .15s; margin-bottom: 10px;
+    }
+    .edit-input:focus { border-color: var(--accent); }
+    .edit-time {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 13px 14px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent);
+      outline: none; transition: border-color .15s; margin-bottom: 16px;
+    }
+    .edit-time:focus { border-color: var(--accent); }
+    .edit-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
 
     /* ── MODALS ────────────────────────────────────── */
     .overlay {
@@ -325,8 +348,14 @@
     </div>
 
     <div class="add-row">
-      <input type="text" class="task-input" id="new-task" placeholder="Add a task..." maxlength="200">
-      <button class="add-btn" id="btn-add">+</button>
+      <div class="add-row-main">
+        <input type="text" class="task-input" id="new-task" placeholder="Add a task..." maxlength="200">
+        <button class="add-btn" id="btn-add">+</button>
+      </div>
+      <div class="add-row-extra">
+        <span class="add-time-label">⏰ Due time:</span>
+        <input type="time" class="add-time" id="new-task-time">
+      </div>
     </div>
   </div>
 
@@ -392,6 +421,22 @@
 
     <div class="divider"></div>
     <button class="btn btn-danger" id="btn-signout">Sign Out</button>
+  </div>
+</div>
+
+<!-- EDIT TASK MODAL -->
+<div class="overlay" id="ov-edit">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Edit <span>Task</span></div>
+    <div class="modal-gap"></div>
+    <div class="edit-label">Task Description</div>
+    <input type="text" class="edit-input" id="edit-text" maxlength="200">
+    <div class="edit-label">Due Time (optional)</div>
+    <input type="time" class="edit-time" id="edit-time">
+    <button class="btn btn-primary" id="btn-edit-save">Save Changes →</button>
+    <div class="modal-gap"></div>
+    <button class="btn btn-danger" id="btn-edit-delete">Delete Task</button>
   </div>
 </div>
 
@@ -648,6 +693,7 @@
   $('task-list').addEventListener('click', async e => {
     const check = e.target.closest('.task-check');
     const del   = e.target.closest('[data-del]');
+    const body  = e.target.closest('.task-body');
     if (check) {
       const id   = check.dataset.id;
       const done = check.dataset.done === 'true';
@@ -659,15 +705,60 @@
         await deleteDoc(doc(db, 'users', uid, 'tasks', del.dataset.del));
       }
     }
+    if (body) {
+      const card = body.closest('.task-card');
+      if (card) openEditModal(card.dataset.id);
+    }
   });
+
+  // ── EDIT MODAL ───────────────────────────────────────────────
+  let editingId = null;
+
+  async function openEditModal(id) {
+    editingId = id;
+    const snap = await getDoc(doc(db, 'users', uid, 'tasks', id));
+    if (!snap.exists()) return;
+    const task = snap.data();
+    $('edit-text').value = task.text || '';
+    $('edit-time').value = task.dueTime || '';
+    openOverlay('ov-edit');
+    setTimeout(() => $('edit-text').focus(), 300);
+  }
+
+  $('btn-edit-save').onclick = async () => {
+    if (!editingId) return;
+    const text = $('edit-text').value.trim();
+    if (!text) { toast('Task text cannot be empty.'); return; }
+    await updateDoc(doc(db, 'users', uid, 'tasks', editingId), {
+      text,
+      dueTime: $('edit-time').value || null
+    });
+    closeOverlay('ov-edit');
+    toast('Task updated!');
+    editingId = null;
+  };
+
+  $('btn-edit-delete').onclick = async () => {
+    if (!editingId) return;
+    if (confirm('Delete this task?')) {
+      await deleteDoc(doc(db, 'users', uid, 'tasks', editingId));
+      closeOverlay('ov-edit');
+      editingId = null;
+    }
+  };
+
+  $('edit-text').addEventListener('keydown', e => { if (e.key === 'Enter') $('btn-edit-save').click(); });
 
   // add task
   async function addFromInput() {
     const inp  = $('new-task');
+    const time = $('new-task-time');
     const text = inp.value.trim();
     if (!text) return;
-    inp.value = '';
-    await addTask(text, null, null, null);
+    await addTask(text, time.value || null, null, null);
+    inp.value  = '';
+    time.value = '';
+    inp.focus();
   }
   $('btn-add').onclick = addFromInput;
   $('new-task').onkeydown = e => { if (e.key === 'Enter') addFromInput(); };
