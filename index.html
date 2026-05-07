@@ -402,7 +402,7 @@
   import { initializeApp }        from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
   import { getFirestore, doc, setDoc, getDoc, getDocs,
            collection, query, where, onSnapshot,
-           updateDoc, deleteDoc, orderBy, serverTimestamp }
+           updateDoc, deleteDoc, serverTimestamp }
     from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
   import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
            onAuthStateChanged, signOut, sendPasswordResetEmail }
@@ -590,9 +590,12 @@
 
   function subscribeToTasks() {
     const today = todayStr();
-    const q = query(tasksCol(), where('date','==',today), orderBy('createdAt'));
+    const q = query(tasksCol(), where('date','==',today));
     unsubscribe = onSnapshot(q, snap => {
-      renderTasks(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      const tasks = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a,b) => (a.createdAt?.seconds ?? 0) - (b.createdAt?.seconds ?? 0));
+      renderTasks(tasks);
     });
   }
 
