@@ -1,4 +1,4 @@
-const CACHE = 'daily-ops-v2';
+const CACHE = 'daily-ops-v3';
 const ASSETS = ['./','./index.html','./manifest.json','./icon.svg'];
 
 self.addEventListener('install', e => {
